@@ -604,6 +604,7 @@ class HttpRouter
      *           Production code should use dispatch() instead.
      *
      * @link     https://github.com/zero-to-prod/web-framework
+     * @link https://github.com/zero-to-prod/http-router
      */
     public function getRoutes(): array
     {
@@ -690,6 +691,7 @@ class HttpRouter
      *           Production code should use dispatch() instead.
      *
      * @link     https://github.com/zero-to-prod/web-framework
+     * @link https://github.com/zero-to-prod/http-router
      */
     public function matchRoute(string $method, string $uri): ?Route
     {
@@ -708,6 +710,7 @@ class HttpRouter
      *           Not typically needed in production code.
      *
      * @link     https://github.com/zero-to-prod/web-framework
+     * @link https://github.com/zero-to-prod/http-router
      */
     public function hasRoute(string $method, string $pattern): bool
     {
