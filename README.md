@@ -4,7 +4,7 @@
 [![Packagist Downloads](https://img.shields.io/packagist/dt/zero-to-prod/http-router)](https://packagist.org/packages/zero-to-prod/http-router)
 [![License](https://img.shields.io/github/license/zero-to-prod/http-router)](https://github.com/zero-to-prod/http-router)
 
-High-performance HTTP router for PHP 7.1+ with three-level indexing, PSR-15 middleware support, and route caching.
+High-performance HTTP router for PHP 7.2+ with three-level indexing, PSR-15 middleware support, and route caching.
 
 ## Features
 

@@ -1,32 +1,4 @@
 services:
-  php7.1:
-    volumes:
-      - ./:/app:delegated
-      - ./.vendor/php7.1:/app/vendor
-    build:
-      context: ./docker/7.1
-      target: base
-    working_dir: /app
-
-  debug7.1:
-    extends:
-      service: php7.1
-    volumes:
-      - ./:/app:delegated
-      - ./docker/7.1:/usr/local/etc/php
-      - ./.vendor/php7.1:/app/vendor
-    build:
-      target: debug
-
-  composer7.1:
-    extends:
-      service: php7.1
-    volumes:
-      - ./:/app:delegated
-      - ./.vendor/php7.1:/app/vendor
-    build:
-      target: composer
-
   php7.2:
     volumes:
       - ./:/app:delegated

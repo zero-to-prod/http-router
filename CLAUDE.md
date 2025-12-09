@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A high-performance PHP HTTP router library with three-level indexing, PSR-15 middleware support, and route caching. Designed for PHP 7.1+ with broad multi-version compatibility.
+A high-performance PHP HTTP router library with three-level indexing, PSR-15 middleware support, and route caching. Designed for PHP 7.2+ with broad multi-version compatibility.
 
 **Core Features:**
 - **Three-Level Route Indexing**: Static index (O(1)) → Prefix index (O(1) + O(n)) → Method index (O(n))
@@ -38,5 +38,5 @@ composer test
 ## Key Details
 
 - Namespace: Zerotoprod\HttpRouter\
-- Minimum PHP: 7.1
+- Minimum PHP: 7.2
 - Dependencies: PSR-7, PSR-15, nyholm/psr7
