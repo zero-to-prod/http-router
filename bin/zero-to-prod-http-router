@@ -2,7 +2,7 @@
 <?php
 
 /**
- * Zero-to-Prod :slug Documentation Publisher
+ * Zero-to-Prod http-router Documentation Publisher
  *
  * Publishes the README.md file to the user's documentation directory.
  */
@@ -11,7 +11,7 @@ require getcwd().'/vendor/autoload.php';
 
 use Zerotoprod\PackageHelper\PackageHelper;
 
-$target_path = getcwd().'/docs/zero-to-prod/:slug/';
+$target_path = getcwd().'/docs/zero-to-prod/http-router/';
 if (isset($argv[1])) {
     $target_path = rtrim($argv[1], '/').'/';
 }

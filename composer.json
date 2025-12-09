@@ -1,14 +1,19 @@
 {
-  "name": "zero-to-prod/:slug",
-  "description": ":description",
+  "name": "zero-to-prod/http-router",
+  "description": "High-performance HTTP router for PHP with three-level indexing, PSR-15 middleware support, and route caching",
   "license": "MIT",
   "type": "library",
   "keywords": [
     "zero-to-prod",
-    ":slug"
+    "http-router",
+    "router",
+    "routing",
+    "http",
+    "psr-15",
+    "middleware"
   ],
   "readme": "./README.md",
-  "time": ":time",
+  "time": "2025-12-09",
   "authors": [
     {
       "name": "David Smith",
@@ -17,13 +22,12 @@
       "role": "maintainer"
     }
   ],
-  "homepage": "https://github.com/zero-to-prod/:slug",
+  "homepage": "https://github.com/zero-to-prod/http-router",
   "support": {
     "email": "dave0016@gmail.com",
-    "issues": "https://github.com/zero-to-prod/:slug/issues",
-    "source": "https://github.com/zero-to-prod/:slug",
-    "docs": "https://zero-to-prod.github.io/:slug/",
-    "security": "https://github.com/zero-to-prod/:slug/blob/main/SECURITY.md"
+    "issues": "https://github.com/zero-to-prod/http-router/issues",
+    "source": "https://github.com/zero-to-prod/http-router",
+    "docs": "https://zero-to-prod.github.io/http-router/"
   },
   "funding": [
     {
@@ -33,22 +37,23 @@
   ],
   "require": {
     "php": ">=7.1",
-    "zero-to-prod/package-helper": "^1.1.3"
+    "psr/http-message": "^2.0",
+    "psr/http-server-handler": "^1.0",
+    "psr/http-server-middleware": "^1.0",
+    "nyholm/psr7": "^1.0",
+    "nyholm/psr7-server": "^1.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "<12.0"
+    "phpunit/phpunit": "<=11.0.0"
   },
   "autoload": {
     "psr-4": {
-      "Zerotoprod\\:namespace\\": "src/"
+      "Zerotoprod\\HttpRouter\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
       "Tests\\": "tests/"
     }
-  },
-  "bin": [
-    "bin/:slug"
-  ]
+  }
 }
