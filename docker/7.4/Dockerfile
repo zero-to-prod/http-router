@@ -1,4 +1,4 @@
-FROM php:8.5-alpine AS builder
+FROM php:7.4-alpine AS builder
 
 RUN apk add --no-cache \
     git \
@@ -17,16 +17,13 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 
 FROM builder AS debug
 
-RUN apk add --no-cache --virtual .build-deps \
-    $PHPIZE_DEPS \
-    linux-headers \
-  && pecl channel-update pecl.php.net \
-  && pecl install xdebug \
-  && docker-php-ext-enable xdebug \
-  && apk del .build-deps \
-  && rm -rf /tmp/* /var/cache/apk/*
+RUN apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS \
+    && pecl channel-update pecl.php.net \
+    && pecl install xdebug-2.9.8 \
+    && docker-php-ext-enable xdebug \
+    && apk del .phpize-deps
 
-FROM php:8.5-alpine AS base
+FROM php:7.4-alpine AS base
 
 WORKDIR /app
 
