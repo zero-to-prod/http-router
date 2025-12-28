@@ -47,6 +47,7 @@ $router->dispatch();
 ```php
 use Zerotoprod\HttpRouter\HttpRouter;
 
+// Create router and define routes
 $router = HttpRouter::create();
 
 // Static routes
@@ -65,6 +66,22 @@ $router->get('/posts/{id:\d+}', [PostController::class, 'show']);
 // Routes with fluent constraints
 $router->get('/users/{id}', [UserController::class, 'show'])
     ->where('id', '\d+');
+
+// IMPORTANT: Set the request method and URI before dispatching
+$router->forRequest($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
+$router->dispatch();
+```
+
+**Alternative Shorthand:**
+```php
+// Combine create() and forRequest() in one call
+$router = HttpRouter::for($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
+
+$router->get('/', function() {
+    echo 'Home';
+});
+
+$router->dispatch();
 ```
 
 ### HTTP Methods
