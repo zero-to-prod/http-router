@@ -31,8 +31,9 @@ composer require zero-to-prod/http-router
 ```php
 use Zerotoprod\HttpRouter\HttpRouter;
 
-$router = HttpRouter::for('GET', '/users/123')
-    ->get('/users/{id}', [UserController::class, 'show'])
+$router = HttpRouter::for($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
+
+$router->get('/users/{id}', [UserController::class, 'show'])
     ->where('id', '\d+')
     ->name('user.show')
     ->middleware(AuthMiddleware::class);
