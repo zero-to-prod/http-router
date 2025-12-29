@@ -97,6 +97,9 @@ class HttpRouter
     /** @var array|null Pending middleware for next group */
     private $pending_group_middleware = null;
 
+    /** @var array|null Track middleware counts before last middleware() call */
+    private $last_route_middleware_backup = null;
+
     /** @var string|null Path to cache file */
     private $cache_path = null;
 
@@ -427,7 +430,26 @@ class HttpRouter
 
         if ($this->pending_group_middleware !== null) {
             $attributes['middleware'] = $this->pending_group_middleware;
+
+            // Remove the middleware from last route if it was just added by middleware()->group() chain
+            if ($this->last_route !== null && $this->last_route_middleware_backup !== null) {
+                // Restore the route to its state before middleware() was called
+                $this->last_route = new Route(
+                    $this->last_route->method,
+                    $this->last_route->pattern,
+                    $this->last_route->regex,
+                    $this->last_route->params,
+                    $this->last_route->optional_params,
+                    $this->last_route->constraints,
+                    $this->last_route->action,
+                    $this->last_route->name,
+                    $this->last_route_middleware_backup
+                );
+                $this->replaceLastRoute($this->last_route);
+            }
+
             $this->pending_group_middleware = null;
+            $this->last_route_middleware_backup = null;
         }
 
         // Push to stack
@@ -438,6 +460,10 @@ class HttpRouter
 
         // Pop from stack
         array_pop($this->group_stack);
+
+        // Clear last route to prevent middleware() from applying to routes outside this group
+        $this->last_route = null;
+        $this->last_route_index = null;
 
         return $this;
     }
@@ -533,17 +559,19 @@ class HttpRouter
      */
     public function middleware($middleware): self
     {
-        // If we're setting up for a group (no last route), store as pending
-        if ($this->last_route === null) {
-            $this->pending_group_middleware = array_merge(
-                $this->pending_group_middleware ?? [],
-                $this->normalizeMiddleware($middleware)
-            );
-            return $this;
-        }
+        // Always store as pending for potential group() call
+        $this->pending_group_middleware = array_merge(
+            $this->pending_group_middleware ?? [],
+            $this->normalizeMiddleware($middleware)
+        );
 
-        $this->last_route = $this->last_route->withMiddleware($middleware);
-        $this->replaceLastRoute($this->last_route);
+        // Also apply to last route if one exists (will be undone if group() is called next)
+        if ($this->last_route !== null) {
+            // Backup the current middleware state before adding new middleware
+            $this->last_route_middleware_backup = $this->last_route->middleware;
+            $this->last_route = $this->last_route->withMiddleware($middleware);
+            $this->replaceLastRoute($this->last_route);
+        }
 
         return $this;
     }
