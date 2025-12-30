@@ -269,6 +269,14 @@ $router->get('/posts/{year}/{month}/{slug}', [PostController::class, 'show'])
     ]);
 ```
 
+### Wildcard Routes
+
+```php
+// Match everything including slashes
+$router->get('/search/{query}', [SearchController::class, 'search'])
+    ->where('query', '.*');
+```
+
 ## Action Types
 
 The router supports three types of actions:
